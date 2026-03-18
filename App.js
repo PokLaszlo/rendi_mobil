@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { QR_Reader } from './components/QR_Reader';
+import {NavigationContainer} from "@react-navigation/native"
+import RendiStack from './RendiStack';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <QR_Reader />
-      <StatusBar style="auto" />
+      <NavigationContainer>
+        <RendiStack ></RendiStack>
+      </NavigationContainer>
     </View>
   );
 }
