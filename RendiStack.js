@@ -7,7 +7,7 @@ import Reg from './screens/Reg'
 const Stack = createNativeStackNavigator()
 export default function RendiStack() {
   return (
-    <Stack.Navigator >
+    <Stack.Navigator>
         <Stack.Screen name='Home' component={Home}/>
         <Stack.Screen name='Reg' component={Reg}/>
     </Stack.Navigator>

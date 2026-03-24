@@ -1,21 +1,24 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { CameraView, useCameraPermissions } from 'expo-camera'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import startArriving  from '../services/VisitService'
 
 function QR_Reader() {
-    const [permission,requestPermission] = useCameraPermissions()
-    const [scanned,setScanned] = React.useState(false)
-    const handleBarcodeScanned=({type,data})=>{
-        setScanned(true)
-        alert("Üzenetem"+data)
-    }
+    const [permission, requestPermission] = useCameraPermissions()
+    const [scanned, setScanned] = React.useState(false)
 
-    if(!permission) return <View />
-    if(!permission.granted){
-        return(
+    const handleBarcodeScanned = ({ type, data }) => {
+        setScanned(true)
+        alert("Üzenetem" + data)
+    }
+    startArriving
+    if (!permission) return <View />
+    if (!permission.granted) {
+        return (
             <View style={styles.container}>
                 <Text>Engedély szükséges a kamerához!!!</Text>
-                <Button 
+                <Button
                     title='Engedélyez'
                     onPress={requestPermission}
                 />
@@ -24,17 +27,17 @@ function QR_Reader() {
     }
     return (
         <View style={styles.container}>
-            <CameraView 
+            <CameraView
                 style={StyleSheet.absoluteFill}
                 facing='back'
-                onBarcodeScanned={scanned?undefined:handleBarcodeScanned}
+                onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
                 barcodeScannerSettings={{
-                    barcodeTypes:["qr"]
+                    barcodeTypes: ["qr"]
                 }}
             />
             {scanned && (
                 <View style={styles.buttonContainer}>
-                    <Button title='Vissza' onPress={()=>setScanned(false)}/>
+                    <Button title='Vissza' onPress={() => setScanned(false)} />
                 </View>
             )}
         </View>
@@ -57,4 +60,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export {QR_Reader}
+export { QR_Reader }
