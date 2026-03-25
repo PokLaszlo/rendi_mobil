@@ -1,8 +1,7 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { CameraView, useCameraPermissions } from 'expo-camera'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import startArriving  from '../services/VisitService'
+import { startArriving } from '../services/VisitService'
 
 function QR_Reader() {
     const [permission, requestPermission] = useCameraPermissions()
@@ -11,8 +10,8 @@ function QR_Reader() {
     const handleBarcodeScanned = ({ type, data }) => {
         setScanned(true)
         alert("Üzenetem" + data)
+        startArriving()
     }
-    startArriving
     if (!permission) return <View />
     if (!permission.granted) {
         return (

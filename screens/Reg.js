@@ -3,29 +3,7 @@ import React, { useState } from 'react'
 import { Button } from 'react-native-web'
 import Input from '../components/Input'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-async function save(name, email) {
-    console.log("Mentés folyamatban...")
-    const url = "http://localhost:8000/api/visits"
-    try {
-       let response = await fetch(url, {
-           method: "post",
-           headers: {
-               "Content-Type": "application/json"
-           },
-           body: JSON.stringify({
-               name: name,
-               email: email,
-               eventId:1
-           })
-       })
-       let res = await response.json()
-       console.log("Hozzáadás sikeres: \n",res.data)
-       AsyncStorage.setItem("rendiId",res.data.id)
-    } catch (error) {
-        console.error("Hozzáadás sikertelen: \n",error)
-    }
-}
+import {save} from '../services/VisitService'
 
 export default function Reg({ navigation }) {
     const [name, setName] = useState("")

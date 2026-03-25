@@ -8,7 +8,7 @@ const startArriving = async () => {
     let res = await fetch(url + "/" + rendiId)
     let response = await res.json()
     response.data.id == rendiId
-        ? updateArrival(response.data) 
+        ? updateArrival(response.data)
         : console.error("Hiba")
 }
 const updateArrival = async (data) => {
@@ -18,11 +18,35 @@ const updateArrival = async (data) => {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({  
+        body: JSON.stringify({
             arrived: true,
         })
     })
     let res = await response.json()
     console.log(res.data)
 }
-export default startArriving()
+
+async function save(name, email) {
+    console.log("Mentés folyamatban...")
+    const url = host
+    try {
+        let response = await fetch(url, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                eventId: 1
+            })
+        })
+        let res = await response.json()
+        console.log("Hozzáadás sikeres: \n", res.data)
+        AsyncStorage.setItem("rendiId", res.data.id)
+    } catch (error) {
+        console.error("Hozzáadás sikertelen: \n", error)
+    }
+}
+
+export { startArriving, save }
